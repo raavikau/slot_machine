@@ -14,6 +14,21 @@ symbol_value = {
     "D": 2
 }
 
+def check_winnings(columns, lines, bet, values):
+    winning_amount = 0
+    winning_lines = []
+    for rline in range(lines):
+        symbol = columns[0][rline]
+        for col in columns:
+            symbol_to_check = col[rline]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winning_amount += values[symbol] * bet
+            winning_lines.append(rline+1)
+
+    return winning_amount, winning_lines
+
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols = []
     for symbol, count in symbols.items():
@@ -95,5 +110,11 @@ def main():
     print(f"You are betting ${bet_amount} on {lines}. Total bet is equal to ${total_bet}")
     slots = get_slot_machine_spin(3, 3, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet_amount, symbol_value)
+    if winnings != 0:
+        print(f"You won ${winnings}")
+        print("You won on lines: ", *winning_lines)
+    else:
+        print("You won nothing")
 
 main()
