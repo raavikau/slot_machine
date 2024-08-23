@@ -45,6 +45,7 @@ def get_slot_machine_spin(rows, cols, symbols):
             column.append(value)
 
         columns.append(column)
+
     return columns
 
 def print_slot_machine(columns):
@@ -66,6 +67,7 @@ def deposit():
                 print("Amount must be greater than 0")
         else:
             print("Please enter a number")
+
     return amount
 
 def get_number_of_lines():
@@ -79,6 +81,7 @@ def get_number_of_lines():
                 print("Enter a valid number of lines")
         else:
             print("Please enter a number")
+
     return lines
 
 def get_bet():
@@ -92,13 +95,10 @@ def get_bet():
                 print("Amount must be between $1 - $100")
         else:
             print("Please enter a number")
+
     return bet_amount
 
 def spin(balance):
-    pass
-
-def main():
-    balance = deposit()
     lines = get_number_of_lines()
     while True:
         bet_amount = get_bet()
@@ -113,8 +113,23 @@ def main():
     winnings, winning_lines = check_winnings(slots, lines, bet_amount, symbol_value)
     if winnings != 0:
         print(f"You won ${winnings}")
-        print("You won on lines: ", *winning_lines)
+        print("You won on line number:", *winning_lines)
     else:
-        print("You won nothing")
+        print("You loose")
+
+    return winnings - total_bet
+
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current balance is ${balance}")
+        user_input = input("Press enter if you ant to continue (q to quit)").lower()
+        if user_input == 'q' or balance == 0:
+            break
+        result = spin(balance)
+        print(f"Result of spin is: {result}")
+        balance += result
+
+    print(f"You left with ${balance}")
 
 main()
