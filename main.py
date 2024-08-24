@@ -23,45 +23,45 @@ symbol_value = {
 def check_winnings(columns, row_lines, bet, values):
     winning_amount = 0
     winning_lines = []
-    for rline in range(row_lines):
-        symbol = columns[0][rline]
-        for col in columns:
-            symbol_to_check = col[rline]
-            if symbol != symbol_to_check:
+    for rline in range(row_lines):  # iterate every row by row [ccc],[aba],[ddd]
+        symbol = columns[0][rline]  # c, a, d  # c l:0, a 1, d 2 take frst element of every row
+        for col in columns:  # col1: cad, cbd, cad take column by column
+            symbol_to_check = col[rline]  # c c c, a b, d d d
+            if symbol != symbol_to_check:  # a != b
                 break
         else:
-            winning_amount += values[symbol] * bet
-            winning_lines.append(rline+1)
+            winning_amount += values[symbol] * bet  # 3*10 6*10 winning amount with symbol values
+            winning_lines.append(rline+1)  # 1 3 append winning lines
 
     return winning_amount, winning_lines
 
-def get_slot_machine_spin(rows, cols, symbols):
+def get_slot_machine_spin(rows, cols, symbols):  # get random slot machine spin
     all_symbols = []
-    for symbol, count in symbols.items():
-        for _ in range(count):
-            all_symbols.append(symbol)
+    for symbol, count in symbols.items():  # take value from symbol_count
+        for _ in range(count):  # take value from dictionary irritate over range
+            all_symbols.append(symbol)  # add all symbols in list
 
     columns = []
-    for _ in range(cols):
+    for _ in range(cols):  # to the range column
         column = []
-        current_symbols = all_symbols[:]
+        current_symbols = all_symbols[:]  # copy all values
         for _ in range(rows):
-            value = random.choice(current_symbols)
-            current_symbols.remove(value)
+            value = random.choice(current_symbols)  # choose value from list
+            current_symbols.remove(value)  # remove from list so not come again
             column.append(value)
 
         columns.append(column)
     return columns
 
-def print_slot_machine(columns):
-    for row in range(len(columns[0])):
-        for i, column in enumerate(columns):
+def print_slot_machine(columns):  # print the slot machine
+    for row in range(len(columns[0])):  # iterate to the length of column
+        for i, column in enumerate(columns):  # take the column one by one
             if i != len(columns) - 1:
                 print(column[row], end=' | ')
             else:
                 print(column[row])
 
-def deposit():
+def deposit():  # to deposit money
     while True:
         amount = input("How much would you like to deposit? $")
         if amount.isdigit():
@@ -79,8 +79,8 @@ def get_number_of_lines():
     while True:
         lines = input(f"Enter the number of lines to bet on (1 - {MAX_LINES})? ")
         if lines.isdigit():
-            lines = int(lines)
-            if 1 <= lines <= MAX_LINES:
+            lines = int(lines)  # get the number of lines to bet on
+            if 1 <= lines <= MAX_LINES:  # check that the line you choose is in between
                 break
             else:
                 print("Enter a valid number of lines")
@@ -94,7 +94,7 @@ def get_bet():
         bet_amount = input("What would you like to bet on each line? $")
         if bet_amount.isdigit():
             bet_amount = int(bet_amount)
-            if MIN_BET <= bet_amount <= MAX_BET:
+            if MIN_BET <= bet_amount <= MAX_BET:  # to make sure bet amount is in between
                 break
             else:
                 print(f"Amount must be between ${MIN_BET} - ${MAX_BET}")
@@ -120,7 +120,7 @@ def spin(balance):
     winnings, winning_lines = check_winnings(slots, lines, bet_amount, symbol_value)
     if winnings != 0:
         print(f"You won ${winnings}")
-        print("You won on line number:", *winning_lines)
+        print("You won on line number:", *winning_lines)  # to show multiple win lines
     else:
         print("You loose")
 
