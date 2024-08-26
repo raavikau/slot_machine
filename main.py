@@ -13,7 +13,7 @@ symbol_count = {
     "D": 8
 }
 
-symbol_value = {
+symbol_value = {  # the value of the symbol
     "A": 5,
     "B": 4,
     "C": 3,
@@ -43,14 +43,14 @@ def get_slot_machine_spin(rows, cols, symbols):  # get random slot machine spin
 
     columns = []
     for _ in range(cols):  # to the range column
-        column = []
+        col = []
         current_symbols = all_symbols[:]  # copy all values
         for _ in range(rows):
             value = random.choice(current_symbols)  # choose value from list
             current_symbols.remove(value)  # remove from list so not come again
-            column.append(value)
+            col.append(value)
 
-        columns.append(column)
+        columns.append(col)
     return columns
 
 def print_slot_machine(columns):  # print the slot machine
@@ -62,6 +62,7 @@ def print_slot_machine(columns):  # print the slot machine
                 print(column[row])
 
 def deposit():  # to deposit money
+    print("Welcome to slot machine simulator")
     while True:
         amount = input("How much would you like to deposit? $")
         if amount.isdigit():
