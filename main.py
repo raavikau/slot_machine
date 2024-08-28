@@ -6,7 +6,7 @@ MAX_BET = 100
 ROWS = 3
 COLS = 3
 
-symbol_count = {
+symbol_count = {  # how many times symbol appear
     "A": 3,
     "B": 4,
     "C": 6,
@@ -54,7 +54,7 @@ def get_slot_machine_spin(rows, cols, symbols):  # get random slot machine spin
     return columns
 
 def print_slot_machine(columns):  # print the slot machine
-    for row in range(len(columns[0])):  # iterate to the length of column
+    for row in range(len(columns[0])):  # iterate to the length of column[0[,,],1[,,],2[,,]]
         for i, column in enumerate(columns):  # take the column one by one
             if i != len(columns) - 1:
                 print(column[row], end=' | ')
